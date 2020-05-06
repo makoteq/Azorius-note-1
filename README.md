@@ -1,5 +1,13 @@
 # Azorius note
 Simple and clear note for saving private notes in cloud without login
+## Todo list
+- [x] Basic UI
+- [x] Interactive tags
+- [ ] Add note
+- [x] get note
+- [ ] About page
+- [x] sweetAlert support 
+- [] md support 
 ## Project setup
 ```
 npm install
