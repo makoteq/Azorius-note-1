@@ -8,6 +8,21 @@ Simple and clear note for saving private notes in cloud without login
 - [ ] About page
 - [x] sweetAlert support 
 - [ ] md support 
+## Interactive tags:
+- !link
+- !header
+- !bold
+- !italic
+- !today
+- !tommorow
+- !yesterday
+- !time
+- !lorem
+- !tip
+- !random
+- !dice
+- !joke
+- !lanyface
 ## Project setup
 ```
 npm install
