@@ -1,4 +1,6 @@
+![logo](https://i.imgur.com/LfMNu2K.png)
 # Azorius note
+
 Simple and clear note for saving private notes in cloud without login
 ## Todo list
 - [x] Basic UI
