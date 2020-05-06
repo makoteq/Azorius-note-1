@@ -1,12 +1,12 @@
 <template>
   <b-col class="h-100 rightCol">
-    <div>
+    <form v-on:submit.prevent>
       <p style="color:white" class="title">
         Or redeem your code!
       </p>
       <input v-model="code" maxlength="4" placeholder="ID" type="text" />
       <button @click="getData" class="submit2">Gimme my notes!</button>
-    </div>
+    </form>
   </b-col>
 </template>
 

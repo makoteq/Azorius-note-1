@@ -1,13 +1,12 @@
 <template>
   <b-col class="h-100 leftCol">
-    <div class="innerCon">
+    <form v-on:submit.prevent class="innerCon">
       <p class="title">Note!</p>
       <textarea
         @input="replace"
         v-model="note"
         rows="10"
         maxlength="2000"
-        placeholder="!time"
       ></textarea>
       <div>
         <input v-model="interactive" type="checkbox" />
@@ -22,7 +21,7 @@
         >Create password <b-icon-lock-fill></b-icon-lock-fill
       ></span>
       <button class="submit">Submit</button>
-    </div>
+    </form>
   </b-col>
 </template>
 
