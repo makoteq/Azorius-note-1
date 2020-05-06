@@ -7,7 +7,7 @@ Simple and clear note for saving private notes in cloud without login
 - [x] get note
 - [ ] About page
 - [x] sweetAlert support 
-- [] md support 
+- [ ] md support 
 ## Project setup
 ```
 npm install
