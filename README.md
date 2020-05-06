@@ -1,4 +1,6 @@
-# Azorius note
+![logo](https://i.imgur.com/LfMNu2K.png)
+# Azorius note :orange_book:
+
 Simple and clear note for saving private notes in cloud without login
 ## Todo list
 - [x] Basic UI
@@ -8,6 +10,21 @@ Simple and clear note for saving private notes in cloud without login
 - [ ] About page
 - [x] sweetAlert support 
 - [ ] md support 
+## Interactive tags: :triangular_flag_on_post:	
+- !link
+- !header
+- !bold
+- !italic
+- !today
+- !tommorow
+- !yesterday
+- !time
+- !lorem
+- !tip
+- !random
+- !dice
+- !joke
+- !lanyface
 ## Project setup
 ```
 npm install
