@@ -1,0 +1,88 @@
+<template>
+  <b-col class="h-100 rightCol">
+    <div>
+      <p style="color:white" class="title">
+        Or redeem your code!
+      </p>
+      <input v-model="code" maxlength="4" placeholder="ID" type="text" />
+      <button @click="getData" class="submit2">Gimme my notes!</button>
+    </div>
+  </b-col>
+</template>
+
+<script>
+import Swal from "sweetalert2";
+import axios from "axios";
+export default {
+  name: "getNotesComponent",
+  data() {
+    return {
+      code: ""
+    };
+  },
+  methods: {
+    getData() {
+      axios
+        .post("/api/getdata", {
+          code: this.code
+        })
+        .then(response => {
+          this.$router.push({
+            name: "Note",
+            params: { note: response.data[0].note, code: response.data[0].code }
+          });
+        })
+        .catch(error => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Oops...",
+            text: "Wrong code",
+            width: "100",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          console.log(error.response);
+        });
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.rightCol {
+  background-color: #ff4b2b;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 60vh;
+  border-radius: 0 0 10px 0;
+}
+input {
+  background-color: #f3f3f3;
+  border: none;
+  line-height: 1.5;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  transition: all 0.4s;
+  &:focus {
+    outline: 0;
+  }
+}
+.submit2 {
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  outline: none;
+  font-size: 12px;
+  color: black;
+  font-weight: bold;
+  padding: 10px 15px;
+  margin: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+</style>
