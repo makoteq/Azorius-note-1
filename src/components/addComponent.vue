@@ -16,27 +16,55 @@
         ></span>
       </div>
 
-      <input placeholder="password" type="text" v-if="input" />
-      <span class="password" v-else @click="password"
+      <input
+        v-model="password"
+        placeholder="password"
+        type="text"
+        v-if="input"
+      />
+      <span class="password" v-else @click="passwordFunc"
         >Create password <b-icon-lock-fill></b-icon-lock-fill
       ></span>
-      <button class="submit">Submit</button>
+      <button v-b-modal.modal-1 @click="send" class="submit">Submit</button>
     </form>
+    <b-modal ok-only ok-variant="outline-warning" ok-title="OK" id="modal-1">
+      <p>
+        Your code is<span id="code" class="title">{{ code }}</span>
+      </p>
+    </b-modal>
   </b-col>
 </template>
 
 <script>
 import debounce from "lodash.debounce";
+import axios from "axios";
 export default {
   name: "addComponent",
   data() {
     return {
       input: false,
       note: "",
-      interactive: 1
+      password: "",
+      interactive: 1,
+      code: ""
     };
   },
   methods: {
+    send() {
+      axios
+        .post("/api/insert", {
+          note: this.note,
+          password: this.password
+        })
+        .then(response => {
+          this.code = response.data.code;
+          this.copyToClipboard(response.data.code);
+        })
+        .catch(error => {
+          console.log(error.response);
+        });
+    },
+
     replace: debounce(function() {
       const today = new Date();
       const tomorrow = new Date(today);
@@ -122,7 +150,7 @@ export default {
 
       this.note = note;
     }, 500),
-    password() {
+    passwordFunc() {
       this.input = true;
     }
   }
