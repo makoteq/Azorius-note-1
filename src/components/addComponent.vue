@@ -31,6 +31,7 @@
       <p>
         Your code is<span id="code" class="title">{{ code }}</span>
       </p>
+      <span style="cursor:pointer" @click="getNote">Show me my note!</span>
     </b-modal>
   </b-col>
 </template>
@@ -58,13 +59,21 @@ export default {
         })
         .then(response => {
           this.code = response.data.code;
-          this.copyToClipboard(response.data.code);
+          /*reset form*/
+          this.note = "";
+          this.interactive = 1;
+          this.input = false;
         })
         .catch(error => {
           console.log(error.response);
         });
     },
-
+    getNote() {
+      this.$router.push({
+        name: "Note",
+        params: { note: this.note, code: this.code }
+      });
+    },
     replace: debounce(function() {
       const today = new Date();
       const tomorrow = new Date(today);
