@@ -25,14 +25,14 @@
       <span class="password" v-else @click="passwordFunc"
         >Create password <b-icon-lock-fill></b-icon-lock-fill
       ></span>
-      <button v-b-modal.modal-1 @click="send" class="submit">Submit</button>
+      <button @click="send" class="submit">Submit</button>
     </form>
-    <b-modal ok-only ok-variant="outline-warning" ok-title="OK" id="modal-1">
+    <!-- <b-modal ok-only ok-variant="outline-warning" ok-title="OK" id="modal-1">
       <p>
         Your code is<span id="code" class="title">{{ code }}</span>
       </p>
       <span style="cursor:pointer" @click="getNote">Show me my note!</span>
-    </b-modal>
+    </b-modal>-->
   </b-col>
 </template>
 
@@ -45,34 +45,52 @@ export default {
     return {
       input: false,
       note: "",
+      notes: {
+        one: {
+          time: 0,
+          status: ""
+        },
+        two: { time: 0, status: "" },
+        three: { time: 0, status: "" }
+      },
       password: "",
       interactive: 1,
       code: ""
     };
   },
+  mounted() {
+    this.notes.one = JSON.parse(localStorage.getItem("notes")).one;
+    this.notes.two = JSON.parse(localStorage.getItem("notes")).two;
+    this.notes.three = JSON.parse(localStorage.getItem("notes")).three;
+    console.log(this.notes.three.status);
+    // localStorage.setItem("notes", JSON.stringify(this.notes));
+  },
+
   methods: {
     send() {
-      axios
-        .post("/api/insert", {
-          note: this.note,
-          password: this.password
-        })
-        .then(response => {
-          this.code = response.data.code;
-          /*reset form*/
-          this.note = "";
-          this.interactive = 1;
-          this.input = false;
-        })
-        .catch(error => {
-          console.log(error.response);
-        });
+      if (this.notes.three.status != "") {
+        axios
+          .post("/api/insert", {
+            note: this.note,
+            password: this.password
+          })
+          .then(response => {
+            this.code = response.data.code;
+            this.$router.push({
+              name: "Note",
+              params: { note: this.note, code: this.code }
+            });
+          })
+          .catch(error => {
+            console.log(error.response);
+          });
+      }
     },
     getNote() {
-      this.$router.push({
-        name: "Note",
-        params: { note: this.note, code: this.code }
-      });
+      /*reset form*/
+      this.note = "";
+      this.interactive = 1;
+      this.input = false;
     },
     replace: debounce(function() {
       const today = new Date();
@@ -173,13 +191,6 @@ span {
 }
 .password {
   cursor: pointer;
-}
-.leftCol {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  min-height: 60vh;
-  border-radius: 0 10px 0 0;
 }
 input,
 textarea {

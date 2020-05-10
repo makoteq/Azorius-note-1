@@ -1,13 +1,14 @@
 <template>
   <div class="wrapper">
-    <div data-aos="fade-up" class="container">
-      <p style="font-size:3em;" class="title">
+    <div class="container">
+      <p data-aos="fade-up" style="font-size:3em;" class="title">
         Azorius <span style="color:#ff4b2b">Note</span
         ><b-icon-paperclip></b-icon-paperclip>
       </p>
       <b-container class="h-100" fluid>
         <b-row class="h-100">
-          <addComponent />
+          <addComponent v-if="1" />
+          <list v-else />
           <getNotes />
         </b-row>
       </b-container>
@@ -20,11 +21,13 @@
 // @ is an alias to /src
 import addComponent from "@/components/addComponent.vue";
 import getNotes from "@/components/getnotesComponent.vue";
+import list from "@/components/listComponent.vue";
 export default {
   name: "Home",
   components: {
     addComponent,
-    getNotes
+    getNotes,
+    list
   }
 };
 </script>
@@ -51,5 +54,13 @@ export default {
   margin: 20px;
   font-weight: bold;
   cursor: pointer;
+}
+.leftCol {
+  min-width: 45vw;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 60vh;
+  border-radius: 0 10px 0 0;
 }
 </style>

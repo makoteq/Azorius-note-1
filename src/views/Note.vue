@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
     <p @click="goBack" class="goBack">go back</p>
-    <div data-aos="fade-up" class="container">
+    <div class="container">
       <div class="innerCon" style="padding:0">
-        <p style="font-size:2.5em" class="title">
-          Note <span>#{{ code }}</span>
+        <p data-aos="fade-up" style="font-size:2.5em" class="title">
+          Note <span>{{ code }}</span>
         </p>
         <p>{{ note }}</p>
       </div>
