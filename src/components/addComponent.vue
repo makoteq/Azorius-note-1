@@ -39,6 +39,7 @@
 <script>
 import debounce from "lodash.debounce";
 import axios from "axios";
+import Swal from "sweetalert2";
 export default {
   name: "addComponent",
   data() {
@@ -58,17 +59,20 @@ export default {
       code: ""
     };
   },
-  mounted() {
-    this.notes.one = JSON.parse(localStorage.getItem("notes")).one;
-    this.notes.two = JSON.parse(localStorage.getItem("notes")).two;
-    this.notes.three = JSON.parse(localStorage.getItem("notes")).three;
-    console.log(this.notes.three.status);
-    // localStorage.setItem("notes", JSON.stringify(this.notes));
-  },
 
   methods: {
     send() {
-      if (this.notes.three.status != "") {
+      if (localStorage.note3) {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Oops...",
+          text: "You can't create more then 3 notes.",
+          width: "100",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      } else {
         axios
           .post("/api/insert", {
             note: this.note,
@@ -76,6 +80,13 @@ export default {
           })
           .then(response => {
             this.code = response.data.code;
+            if (!localStorage.note1) {
+              localStorage.note1 = response.data.code;
+            } else if (!localStorage.note2) {
+              localStorage.note2 = response.data.code;
+            } else {
+              localStorage.note3 = response.data.code;
+            }
             this.$router.push({
               name: "Note",
               params: { note: this.note, code: this.code }
@@ -201,6 +212,7 @@ textarea {
   padding: 10px;
   border-radius: 5px;
   margin: 10px;
+  max-width: 40vw;
   transition: all 0.4s;
   &:focus {
     outline: 0;

@@ -7,7 +7,7 @@
       </p>
       <b-container class="h-100" fluid>
         <b-row class="h-100">
-          <addComponent v-if="1" />
+          <addComponent v-if="localcheck" />
           <list v-else />
           <getNotes />
         </b-row>
@@ -28,6 +28,17 @@ export default {
     addComponent,
     getNotes,
     list
+  },
+  computed: {
+    localcheck: function() {
+      //localStorage.clear();
+      //  localStorage.note1 = "r4";
+      if (localStorage.note1) {
+        return 0;
+      } else {
+        return 1;
+      }
+    }
   }
 };
 </script>

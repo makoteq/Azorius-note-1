@@ -1,24 +1,92 @@
 <template>
   <b-col class="h-100 leftCol">
     <div class="innerCon">
-      <p class="list">
-        <span class="open">545f</span>
-        <span class="delete"> <b-icon-trash></b-icon-trash></span>
-      </p>
-      <p class="list">
-        <span class="open">545f</span>
-        <span class="delete"><b-icon-trash></b-icon-trash></span>
+      <p v-for="item in notes" :key="item.code" class="list">
+        <span @click="open(item.code)" class="open">{{ item.code }}</span>
+        <span @click="deleteFunc(item.code, item.id)" class="delete">
+          <b-icon-trash></b-icon-trash
+        ></span>
       </p>
     </div>
     <p class="list">
-      <span class="add">add <b-icon-plus-square></b-icon-plus-square></span>
+      <router-link to="/add">
+        <span v-show="check" class="add"
+          >add <b-icon-plus-square></b-icon-plus-square></span
+      ></router-link>
     </p>
   </b-col>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: "getComponent"
+  name: "getComponent",
+  data() {
+    return {
+      notes: []
+    };
+  },
+  methods: {
+    open(code) {
+      axios
+        .post("/api/getdata", {
+          code: code
+        })
+        .then(response => {
+          this.$router.push({
+            name: "Note",
+            params: { note: response.data[0].note, code: response.data[0].code }
+          });
+        })
+        .catch(error => {
+          console.log(error.response);
+        });
+    },
+    deleteFunc(code, id) {
+      axios
+        .post("/api/delete", {
+          code: code
+        })
+        .then(response => {
+          switch (id) {
+            case 0:
+              localStorage.note1 = "";
+              break;
+
+            case 1:
+              localStorage.note2 = "";
+              break;
+
+            case 2:
+              localStorage.note3 = "";
+              break;
+          }
+          location.reload();
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error.response);
+        });
+    }
+  },
+  mounted() {
+    if (localStorage.note1) {
+      this.$set(this.notes, 0, { code: localStorage.getItem("note1"), id: 0 });
+    }
+    if (localStorage.note2) {
+      this.$set(this.notes, 1, { code: localStorage.getItem("note2"), id: 1 });
+    }
+    if (localStorage.note3) {
+      this.$set(this.notes, 2, { code: localStorage.getItem("note3"), id: 2 });
+    }
+    console.log(this.notes);
+  },
+  computed: {
+    check() {
+      if (localStorage.note3) return 0;
+      else return 1;
+    }
+  }
 };
 </script>
 
