@@ -31,9 +31,9 @@ export default {
   },
   computed: {
     localcheck: function() {
-      //localStorage.clear();
+      //    localStorage.clear();
       //  localStorage.note1 = "r4";
-      if (localStorage.note1) {
+      if (localStorage.note1 || localStorage.note2 || localStorage.note3) {
         return 0;
       } else {
         return 1;

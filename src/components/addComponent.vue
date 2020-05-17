@@ -59,10 +59,20 @@ export default {
       code: ""
     };
   },
-
+  computed: {
+    checkNotes() {
+      let count = 0;
+      if (localStorage.note1) count++;
+      if (localStorage.note2) count++;
+      if (localStorage.note3) count++;
+      console.log(count);
+      if (count == 3) return false;
+      else return true;
+    }
+  },
   methods: {
     send() {
-      if (localStorage.note3) {
+      if (this.checkNotes == false) {
         Swal.fire({
           position: "top-end",
           icon: "error",

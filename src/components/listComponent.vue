@@ -1,16 +1,20 @@
 <template>
   <b-col class="h-100 leftCol">
     <div class="innerCon">
-      <p v-for="item in notes" :key="item.code" class="list">
+      <p v-for="item in notes" :key="item.id" class="list">
         <span @click="open(item.code)" class="open">{{ item.code }}</span>
-        <span @click="deleteFunc(item.code, item.id)" class="delete">
+        <span
+          v-if="item.code"
+          @click="deleteFunc(item.code, item.id)"
+          class="delete"
+        >
           <b-icon-trash></b-icon-trash
         ></span>
       </p>
     </div>
     <p class="list">
       <router-link to="/add">
-        <span v-show="check" class="add"
+        <span v-if="checkNotes" class="add"
           >add <b-icon-plus-square></b-icon-plus-square></span
       ></router-link>
     </p>
@@ -23,7 +27,11 @@ export default {
   name: "getComponent",
   data() {
     return {
-      notes: []
+      notes: [
+        { code: "", id: 0 },
+        { code: "", id: 1 },
+        { code: "", id: 2 }
+      ]
     };
   },
   methods: {
@@ -50,19 +58,20 @@ export default {
         .then(response => {
           switch (id) {
             case 0:
-              localStorage.note1 = "";
+              localStorage.removeItem("note1");
               break;
 
             case 1:
-              localStorage.note2 = "";
+              localStorage.removeItem("note2");
               break;
 
             case 2:
-              localStorage.note3 = "";
+              localStorage.removeItem("note3");
               break;
           }
-          location.reload();
           console.log(response);
+          console.log(this.notes);
+          // location.reload();
         })
         .catch(error => {
           console.log(error.response);
@@ -70,6 +79,8 @@ export default {
     }
   },
   mounted() {
+    console.log(this.checkNotes);
+    console.log(this.notes);
     if (localStorage.note1) {
       this.$set(this.notes, 0, { code: localStorage.getItem("note1"), id: 0 });
     }
@@ -82,9 +93,14 @@ export default {
     console.log(this.notes);
   },
   computed: {
-    check() {
-      if (localStorage.note3) return 0;
-      else return 1;
+    checkNotes() {
+      let count = 0;
+      if (localStorage.note1) count++;
+      if (localStorage.note2) count++;
+      if (localStorage.note3) count++;
+      console.log(count);
+      if (count == 3) return false;
+      else return true;
     }
   }
 };
