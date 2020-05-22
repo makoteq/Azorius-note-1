@@ -5,7 +5,7 @@
         Or redeem your code!
       </p>
       <input v-model="code" maxlength="4" placeholder="ID" type="text" />
-      <button @click="getData" class="submit2">Gimme my notes!</button>
+      <button @click="getData" class="submit">Gimme my notes!</button>
     </form>
   </b-col>
 </template>
@@ -71,7 +71,7 @@ input {
     outline: 0;
   }
 }
-.submit2 {
+.submit {
   border-radius: 5px;
   border: none;
   font-weight: bold;

@@ -24,7 +24,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "getComponent",
+  name: "listComponent",
   data() {
     return {
       notes: [
@@ -71,7 +71,7 @@ export default {
           }
           console.log(response);
           console.log(this.notes);
-          // location.reload();
+          location.reload();
         })
         .catch(error => {
           console.log(error.response);

@@ -39,7 +39,6 @@
 <script>
 import debounce from "lodash.debounce";
 import axios from "axios";
-import Swal from "sweetalert2";
 export default {
   name: "addComponent",
   data() {
@@ -72,17 +71,7 @@ export default {
   },
   methods: {
     send() {
-      if (this.checkNotes == false) {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Oops...",
-          text: "You can't create more then 3 notes.",
-          width: "100",
-          showConfirmButton: false,
-          timer: 1500
-        });
-      } else {
+      if (this.note != "" && this.checkNotes == true) {
         axios
           .post("/api/insert", {
             note: this.note,
@@ -222,32 +211,34 @@ textarea {
   padding: 10px;
   border-radius: 5px;
   margin: 10px;
-  max-width: 40vw;
+  max-width: 55vw;
   transition: all 0.4s;
   &:focus {
     outline: 0;
   }
 }
+
 textarea {
   width: 90%;
   box-shadow: -5px -5px 10px #fff, 5px 5px 10px #babebc;
 }
 .submit {
-  border-radius: 20px;
+  border-radius: 5px;
   border: none;
+  font-weight: bold;
   outline: none;
   font-size: 12px;
+  color: black;
   font-weight: bold;
-  padding: 15px 45px;
+  padding: 15px 25px;
   margin: 14px;
   letter-spacing: 1px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: transform 80ms ease-in;
   box-shadow: -5px -5px 10px #fff, 5px 5px 8px #babebc;
-  &:active {
+  /* &:active {
     box-shadow: inset 1px 1px 2px #babebc, inset -1px -1px 2px #fff;
-  }
+  }*/
 }
 .title {
   font-weight: bold;

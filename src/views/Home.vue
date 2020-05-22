@@ -13,7 +13,6 @@
         </b-row>
       </b-container>
     </div>
-    <p class="learn">learn how to use</p>
   </div>
 </template>
 
@@ -46,25 +45,16 @@ export default {
 <style scoped>
 .wrapper {
   width: 100%;
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ebecf0;
 }
 .container {
   border-radius: 10px;
   box-shadow: -5px -5px 10px #fff, 5px 5px 10px #babebc;
   min-height: 60vh;
   padding: 0;
-}
-.learn {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  margin: 20px;
-  font-weight: bold;
-  cursor: pointer;
 }
 .leftCol {
   min-width: 45vw;
