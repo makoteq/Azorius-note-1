@@ -4,8 +4,19 @@
       <p style="color:white" class="title">
         Or redeem your code!
       </p>
-      <input v-model="code" maxlength="4" placeholder="ID" type="text" />
-      <button @click="getData" class="submit">Gimme my notes!</button>
+      <input v-model="code" maxlength="4" placeholder="ID" type="text" /><br />
+      <input
+        v-model="password"
+        placeholder="password"
+        type="text"
+        v-if="input"
+      />
+      <span class="password" v-else @click="passwordFunc"
+        >Enter password <b-icon-lock-fill></b-icon-lock-fill
+      ></span>
+      <button @click="getData" class="submit">
+        Gimme my notes!
+      </button>
     </form>
   </b-col>
 </template>
@@ -17,19 +28,25 @@ export default {
   name: "getNotesComponent",
   data() {
     return {
-      code: ""
+      code: "",
+      password: "",
+      input: false
     };
   },
   methods: {
     getData() {
       axios
         .post("/api/getdata", {
-          code: this.code
+          code: this.code,
+          password: this.password
         })
         .then(response => {
           this.$router.push({
             name: "Note",
-            params: { note: response.data[0].note, code: response.data[0].code }
+            params: {
+              note: response.data[0].note,
+              code: response.data[0].code
+            }
           });
         })
         .catch(error => {
@@ -37,13 +54,16 @@ export default {
             position: "top-end",
             icon: "error",
             title: "Oops...",
-            text: "Wrong code",
+            text: "Wrong code or password",
             width: "100",
             showConfirmButton: false,
             timer: 1500
           });
           console.log(error.response);
         });
+    },
+    passwordFunc() {
+      this.input = true;
     }
   }
 };
@@ -84,5 +104,10 @@ input {
   letter-spacing: 1px;
   text-transform: uppercase;
   cursor: pointer;
+}
+.password {
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
 }
 </style>

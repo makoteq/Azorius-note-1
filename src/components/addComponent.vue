@@ -5,8 +5,8 @@
       <textarea
         @input="replace"
         v-model="note"
-        rows="10"
-        maxlength="2000"
+        rows="12"
+        maxlength="3000"
       ></textarea>
       <div>
         <input v-model="interactive" type="checkbox" />
@@ -27,12 +27,6 @@
       ></span>
       <button @click="send" class="submit">Submit</button>
     </form>
-    <!-- <b-modal ok-only ok-variant="outline-warning" ok-title="OK" id="modal-1">
-      <p>
-        Your code is<span id="code" class="title">{{ code }}</span>
-      </p>
-      <span style="cursor:pointer" @click="getNote">Show me my note!</span>
-    </b-modal>-->
   </b-col>
 </template>
 
@@ -236,9 +230,6 @@ textarea {
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: -5px -5px 10px #fff, 5px 5px 8px #babebc;
-  /* &:active {
-    box-shadow: inset 1px 1px 2px #babebc, inset -1px -1px 2px #fff;
-  }*/
 }
 .title {
   font-weight: bold;
